@@ -1,0 +1,12 @@
+<component name="MainScene" extends="Scene">
+    <interface>
+        <field id="labelText" type="string" />
+    </interface>
+    <children>
+        <Label
+            id="helloLabel"
+            text="Hello, brightscript!"
+            translation="[300, 200]"
+        />
+    </children>
+</component>
