@@ -1,12 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <component name="MainScene" extends="Scene">
-    <interface>
-        <field id="labelText" type="string" />
-    </interface>
+    <script type="text/brightscript" uri="MainScene.brs" />
+    <script type="text/brightscript" uri="UILogic/ScreenStackLogic.brs" />
+    <script type="text/brightscript" uri="UILogic/ContentTaskLogic.brs" />
+    <script type="text/brightscript" uri="UILogic/GridScreenLogic.brs" />
+
     <children>
+        <Overhang
+            id="overhang"
+            showOptions="false"
+            showClock="false"
+            logoUri="pkg:/images/hd_overhang_logo.png"
+            translation="[0, 60]"
+        />
         <Label
-            id="helloLabel"
-            text="Hello, brightscript!"
-            translation="[300, 200]"
+            id="loadingIndicator"
+            text="Loading..."
+            font="font:MediumSystemFont"
+            translation="[0, 0]"
+            horizAlign="center"
+            vertAlign="center"
+            visible="false"
+            width="1280"
+            height="720"
         />
     </children>
+
 </component>

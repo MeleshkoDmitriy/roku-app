@@ -1,0 +1,5 @@
+{
+    "schema": "https://devtools.web.roku.com/schema/RokuSceneGraph.xsd",
+    "certificate": "common:/certs/ca-bundle.crt",
+    "feed_url": "https://jonathanbduval.com/roku/feeds/roku-developers-feed-v1.json"
+}
