@@ -25,19 +25,7 @@ sub OnItemFocused()
     m.descriptionLabel.text = item.description
 
     if item.length <> invalid
-        m.titleLabel.text += " | time:" + getTime(item.length)
+        ' m.titleLabel.text += " | time:" + getTime(item.length)
+        m.titleLabel.text = item.length
     end if
 end sub
-
-function getTime(length as Integer) as String
-    minutes = (length / 60).toStr()
-    seconds = length MOD 60
-
-    if seconds < 10
-        seconds = "0" + seconds.toStr()
-    else 
-        seconds = seconds.toStr()
-    end if
-
-    return minutes + ":" + seconds
-end function

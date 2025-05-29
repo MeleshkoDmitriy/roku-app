@@ -8,6 +8,5 @@ sub OnGridScreenItemSelected(event as Object)
     grid = event.getRoSGNode()
     m.selectedIndex = event.getData()
     rowContent = grid.content.getChild(m.selectedIndex[0])
-    itemIndex = m.selectedIndex[1]
-    ShowVideoScreen(rowContent, itemIndex)
+    ShowDetailsScreen(rowContent, m.selectedIndex[1])
 end sub
