@@ -5,7 +5,15 @@ sub Init()
     m.titleLabel = m.top.findNode("titleLabel")
     m.descriptionLabel = m.top.findNode("descriptionLabel")
 
+    m.top.observeFields("visible", "OnVisibleChange")
+
     m.rowList.observeFields("rowItemFocused", "OnItemFocused")
+end sub
+
+sub OnVisibleChange()
+    if m.top.visible = true
+        m.rowList.setFocus(true)
+    end if
 end sub
 
 sub OnItemFocused()

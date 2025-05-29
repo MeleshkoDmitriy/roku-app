@@ -4,6 +4,8 @@
 
     <interface>
         <field id="content" type="node" alias="RowList.content"/>
+        <field id="rowItemSelected" type="intArray" alwaysNotify="true" alias="RowList.rowItemSelected" />
+        <field id="jumpToRowItem" type="intArray" alias="RowList.jumpToRowItem" />
     </interface>
 
     <children>

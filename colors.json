@@ -2,5 +2,6 @@
     "white": "0xFFFFFF",
     "black": "0x000000",
     "gray": "0x808080",
-    "purple": "0x6F1BB1"
+    "purple": "0x6F1BB1",
+    "light_purple": "0x662D91"
 }  
