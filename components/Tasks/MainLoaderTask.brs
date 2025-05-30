@@ -19,18 +19,23 @@ sub GetContent()
 
             if type(value) = "roArray" 
 
-                if category <> "series"
                     row = {}
                     row.title = category
                     row.children = []
 
                     for each item in value
                         itemData = getItemData(item)
+                        season = GetSeasonData(item.seasons)
+                        itemData.mediaType = category
+
+                        if season <> Invalid AND season.count() > 0
+                            itemData.children = season
+                        end if
+
                         row.children.push(itemData)
                     end for
 
                     rootChildren.push(row)
-                end if
             end if
         end for
 
@@ -57,9 +62,42 @@ function getItemData(video as Object) as Object
     item.releaseDate = video.releaseDate
     item.id = video.id
 
+    if video.episodeNumber <> invalid
+        item.episodePosition = video.episodeNumber.toStr()
+    end if
+
     if video.content <> invalid
         item.length = video.content.duration
     end if
     
     return item
+end function
+
+function GetSeasonData(seasons as Object) as Object
+    seasonsArray = []
+
+    if seasons <> invalid
+        episodeCounter = 0
+
+        for each season in seasons 
+            if season.episodes <> invalid
+                episodes = []
+
+                for each episode in season.episodes
+                    episodeData = GetItemData(episode)
+                    episodeData.titleSeason = season.title
+                    episodeData.numEpisodes = episodeCounter
+                    episodeData.mediaType = "episode"
+                    episodes.push(episodeData)
+                    episodeCounter ++
+                end for
+
+                seasonData = GetItemData(season)
+                seasonData.children = episodes
+                seasonData.contentType = "section"
+                seasonsArray.push(seasonData)
+            end if
+        end for
+    end if
+    return seasonsArray
 end function

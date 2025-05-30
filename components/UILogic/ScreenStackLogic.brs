@@ -28,3 +28,7 @@ sub CloseScreen(node as Object)
         end if
     end if
 end sub
+
+function GetCurrentScreen()
+    return m.screenStack.peek()
+end function

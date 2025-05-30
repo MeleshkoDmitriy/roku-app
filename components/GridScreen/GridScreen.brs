@@ -5,9 +5,9 @@ sub Init()
     m.titleLabel = m.top.findNode("titleLabel")
     m.descriptionLabel = m.top.findNode("descriptionLabel")
 
-    m.top.observeFields("visible", "OnVisibleChange")
+    m.top.observeField("visible", "OnVisibleChange")
 
-    m.rowList.observeFields("rowItemFocused", "OnItemFocused")
+    m.rowList.observeField("rowItemFocused", "OnItemFocused")
 end sub
 
 sub OnVisibleChange()
@@ -24,8 +24,7 @@ sub OnItemFocused()
     m.titleLabel.text = item.title
     m.descriptionLabel.text = item.description
 
-    if item.length <> invalid
-        ' m.titleLabel.text += " | time:" + getTime(item.length)
-        m.titleLabel.text = item.length
+    if item.length <> invalid and item.length <> 0
+        m.titleLabel.text += " | time:" + getTime(item.length)
     end if
 end sub

@@ -1,27 +1,21 @@
-sub ShowVideoScreen(content as Object, itemIndex as Integer)
-    m.videoPlayer = CreateObject("roSGNode", "Video") ' video instance
+sub ShowVideoScreen(rowContent as Object, selectedItem as Integer, isSeries = false as Boolean)
+    m.isSeries = isSeries
+    m.videoPlayer = CreateObject("roSGNode", "Video")
 
-    if itemIndex <> 0 
-        numOfChildren = content.getChildCount()
-        children = content.getChildren(numOfChildren - itemIndex, itemIndex)
-
-        childrenClone = []
-        for each child in children
-            childrenClone.push(child.clone(false))
-        end for
-
-        node = CreateObject("roSGNode", "ContentNode")
-        node.update({ children: childrenClone }, true)
-        m.videoPlayer.content = node
+    if selectedItem <> 0 
+        childrenClone = CloneChildren(rowContent, selectedItem)
+        rowNode = CreateObject("roSGNode", "ContentNode")
+        rowNode.update({ children: childrenClone }, true)
+        m.videoPlayer.content = rowNode 
     else
-        m.videoPlayer.content = content.clone(true)
+        m.videoPlayer.content = rowContent.clone(true)
     end if
 
     m.videoPlayer.contentIsPlaylist = true
     ShowScreen(m.videoPlayer)
-    m.videoPlayer.control = "play"
-    m.videoPlayer.ObserveField("state", "OnVideoPlayerStateChange")
-    m.videoPlayer.ObserveField("visible", "OnVideoVisibleChange")
+    m.videoPlayer.control = "play" 
+    m.videoPlayer.observeField("state", "OnVideoPlayerStateChange")
+    m.videoPlayer.observeField("visible", "OnVideoVisibleChange")
 end sub
 
 sub OnVideoPlayerStateChange()
@@ -33,11 +27,20 @@ sub OnVideoPlayerStateChange()
 end sub
 
 sub OnVideoVisibleChange()
-    if m.videoPlayer.visible = false and m.top.visible = true
+    if m.videoPlayer.visible = false AND m.top.visible = true
         currentIndex = m.videoPlayer.contentIndex
         m.videoPlayer.control = "stop"
         m.videoPlayer.content = invalid
-        m.GridScreen.setFocus(true)
-        m.GridScreen.jumpToRowItem = [m.selectedIndex[0], currentIndex + m.selectedIndex[1]]
+        screen = GetCurrentScreen()
+        screen.setFocus(true) 
+        newIndex = m.selectedIndex[1]
+
+        if m.isSeries = true
+           m.isSeries = false
+        else
+           newIndex += currentIndex
+        end if
+
+        screen.jumpToItem = newIndex
     end if
 end sub

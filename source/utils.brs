@@ -25,3 +25,15 @@ function ContentListToSimpleNode(contentList as Object, nodeType = "ContentNode"
 
     return result
 end function
+
+function CloneChildren(node as Object, startItem = 0 as Integer)
+    numOfChildren = node.getChildCount()
+    children = node.getChildren(numOfChildren - startItem, startItem)
+    childrenClone = []
+
+    for each child in children
+        childrenClone.push(child.clone(false))
+    end for
+
+    return childrenClone
+end function
