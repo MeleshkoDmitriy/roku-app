@@ -10,3 +10,6 @@ splash_screen_hd=pkg:/images/splash_hd.png
 
 ui_resolutions=hd
 supports_input_launch=1
+
+#Libraries requirements
+bs_libs_required=roku_ad_lib

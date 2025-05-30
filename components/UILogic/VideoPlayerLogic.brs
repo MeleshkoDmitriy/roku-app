@@ -1,46 +1,25 @@
 sub ShowVideoScreen(rowContent as Object, selectedItem as Integer, isSeries = false as Boolean)
-    m.isSeries = isSeries
-    m.videoPlayer = CreateObject("roSGNode", "Video")
+    videoScreen = CreateObject("roSGNode", "VideoScreen")
+    videoScreen.observeField("close", "OnVideoScreenClose")
 
-    if selectedItem <> 0 
-        childrenClone = CloneChildren(rowContent, selectedItem)
-        rowNode = CreateObject("roSGNode", "ContentNode")
-        rowNode.update({ children: childrenClone }, true)
-        m.videoPlayer.content = rowNode 
-    else
-        m.videoPlayer.content = rowContent.clone(true)
-    end if
+    videoScreen.isSeries = isSeries
+    videoScreen.content = rowContent
+    videoScreen.startIndex = selectedItem
 
-    m.videoPlayer.contentIsPlaylist = true
-    ShowScreen(m.videoPlayer)
-    m.videoPlayer.control = "play" 
-    m.videoPlayer.observeField("state", "OnVideoPlayerStateChange")
-    m.videoPlayer.observeField("visible", "OnVideoVisibleChange")
+    ShowScreen(videoScreen)
 end sub
 
-sub OnVideoPlayerStateChange()
-    state = m.videoPlayer.state
+sub OnVideoScreenClose(event as Object)
+    videoScreen = event.getRoSGNode()
+    close = event.getData()
 
-    if state = "error" or state = "finished"
-        CloseScreen(m.videoPlayer)
-    end if
-end sub
-
-sub OnVideoVisibleChange()
-    if m.videoPlayer.visible = false AND m.top.visible = true
-        currentIndex = m.videoPlayer.contentIndex
-        m.videoPlayer.control = "stop"
-        m.videoPlayer.content = invalid
+    if close = true
+        CloseScreen(videoScreen)
         screen = GetCurrentScreen()
-        screen.setFocus(true) 
-        newIndex = m.selectedIndex[1]
+        screen.setFocus(true)
 
-        if m.isSeries = true
-           m.isSeries = false
-        else
-           newIndex += currentIndex
+        if videoScreen.isSeries = false
+            screen.jumpToItem = videoScreen.lastIndex
         end if
-
-        screen.jumpToItem = newIndex
     end if
 end sub

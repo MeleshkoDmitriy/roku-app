@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<component name="ComponentName" extends="Group" xsi:noNameSpaceSchemaLocation="https://devtools.web.roku.com/schema/RokuSceneGraph.xsd">
+<component name="RowListItemComponent" extends="Group" xsi:noNameSpaceSchemaLocation="https://devtools.web.roku.com/schema/RokuSceneGraph.xsd">
     <script type="text/brightscript" uri="RowListItemComponent.brs" />
 
     <interface>
